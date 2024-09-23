@@ -1,7 +1,7 @@
 i will add some info here later
 
 file structure
-
+```
 /my-web-app
 │
 ├── /frontend
@@ -36,3 +36,4 @@ file structure
 ├── .gitignore
 ├── package.json
 └── README.md
+```
