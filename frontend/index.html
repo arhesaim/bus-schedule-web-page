@@ -1,42 +1,65 @@
 <!DOCTYPE html>
-    <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <!-- Bootstrap CSS -->
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-        </head>
-        <body>
-            <div class ="container pb-5 " id="input1">
-                <h4>city name</h4><br>
-                <input type="text"><br>
-                <button id="nextToBusStop" type="button" class="btn btn-primary mt-2 ">Next</button>
-                <select id="dynamicDropdown" class="form-select">
-                    <option selected>Select an option</option>
-                </select>
-            </div>
-            
-            <div class ="container pb-5 " id="input2">
-                <h4>but stop name</h4><br>
-                <input type="text"><br>
-                <button id="nextToBusList" type="button" class="btn btn-primary mt-2 ">Next</button>
-                <select id="dynamicDropdown" class="form-select"></select>
-                    <option selected>Select an option</option>
-                </select>
-            </div>
-            
-            <div class ="container pb-5 " id="input3">
-                <button type="button" class="btn btn-primary">Bus Num</button>
-            </div>
-            
-            <div class="container-fluid">
-                <button type="button" class="btn btn-outline-primary">Clear</button>
-            </div>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- <div class ="container pb-5 " id="input1">
+        <h4>city name</h4><br>
+        <input type="text"><br>
+        <button id="nextToBusStop" type="button" class="btn btn-primary mt-2 ">Next</button>
+        <select id="dynamicDropdown" class="form-select">
+            <option selected>Select an option</option>
+        </select>
+    </div> -->
 
-            <!-- Bootstrap JS and dependencies -->
-            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-            <!-- Custom JS -->
-            <script src="/bus-schedule-web-page/frontend/js/scripts.js"></script>
-        </body>
+    <!-- <div class ="container pb-5 " id="input2">
+        <h4>bus stop name</h4><br>
+        <input type="text"><br>
+        <button id="nextToBusList" type="button" class="btn btn-primary mt-2 ">Next</button>
+        <select id="dynamicDropdown" class="form-select">
+            <option selected>Select an option</option>
+        </select>
+    </div> -->
+    
+    <div class="form-group">
+        <input type="text" class="form-control" id="searchInput" placeholder="Search.." onkeyup="filterFunction()">
+        <div class="list-group" id="dropdownContent">
+            <!-- Suggestions will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <button id="continueButton" class="btn btn-primary mt-2 d-none">Continue</button>
+
+    <!-- <div class ="container pb-5 " id="input3">
+        <button type="button" class="btn btn-primary">Bus Num</button>
+    </div> -->
+    
+    <div class="container-fluid">
+        <button type="button" class="btn btn-outline-primary">Clear</button>
+    </div>
+
+    <div id="additionalInputs" class="mt-4 d-none">
+        <div class="form-group">
+            <input type="text" class="form-control" id="searchInput2" placeholder="Search..">
+            <div class="list-group" id="dropdownContent2">
+                <!-- Suggestions will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <button id="nextButton" class="btn btn-primary mt-2">Next</button>
+        <div id="busList" class="mt-3">
+            <!-- List of buses will be dynamically inserted here -->
+        </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/scripts.js"></script>
+</body>
 </html>
