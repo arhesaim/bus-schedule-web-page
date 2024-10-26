@@ -34,9 +34,17 @@ app.get('/suggestions', (req, res) => {
 });
 
 app.get('/buses', (req, res) => {
-    const stopName = req.query.stop;
-    const query = `SELECT bus_number FROM buses WHERE stop_name = ?`;
-    db.query(query, [stopName], (err, results) => {
+    const stopName = req.query.q;
+    const query = `select distinct s.stop_name,r.route_short_name, t.trip_long_name, s.stop_desc
+                    from stops as s
+                        join stop_times as st on s.stop_id = st.stop_id
+                        join trips as t on t.trip_id = st.trip_id
+                        join routes as r on t.route_id = r.route_id
+                    where stop_name like '%${stopName}%'
+                    order by 
+                        cast(regexp_substr(r.route_short_name, '[0-9]+') as unsigned),
+                        regexp_substr(r.route_short_name, '[A-Z]+$');`;
+    db.query(query, (err, results) => {
         if (err) throw err;
         res.json(results);
     });

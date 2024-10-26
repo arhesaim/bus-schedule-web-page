@@ -1,6 +1,7 @@
 document.getElementById('searchInput').addEventListener('input', filterFunction);
-document.getElementById('continueButton').addEventListener('click', showAdditionalInput);
-document.getElementById('additionalInputs').addEventListener('input', filterFunctionBuses);
+document.getElementById('continueButton').addEventListener('input', fetchBuses);
+
+//var busStop;
 
 
 
@@ -21,7 +22,9 @@ function filterFunction() {
                     const a = document.createElement('a');
                     a.href = '#';
                     a.className = 'list-group-item list-group-item-action';
-                    a.textContent = item.stop_name; // Use the correct property name
+                    a.textContent = item.stop_name;
+                    busStop = a.textContent; 
+                    // Use the correct property name
                     a.addEventListener('click', function() {
                         input.value = item.stop_name; // Auto-fill the input field
                         dropdownContent.innerHTML = '';
@@ -36,67 +39,58 @@ function filterFunction() {
     
 }
 
-function showAdditionalInput() {
-    const additionalInputs = document.getElementById('additionalInputs');
-    additionalInputs.classList.remove('d-none'); // Show the additional input field
-    
-    // Attach the filterFunction to the new input field
-    document.getElementById('searchInput2').addEventListener('input', filterFunction);
-    
-    // Hide the "Continue" button after showing the new input
-    document.getElementById('continueButton').classList.add('d-none');
-}
 
-
-function filterFunctionBuses() {
-    const input = document.getElementById('searchInput');
-    const filter = input.value.toLowerCase();
-    const dropdownContent = document.getElementById('dropdownContent');
-    const continueButton = document.getElementById('continueButton');
+// function filterFunctionSchedule() {
+//     //const input = document.getElementById('searchInput');
+//     //const filter = input.value.toLowerCase();
+//     //const dropdownContent = document.getElementById('dropdownContent');
+//     const continueButton = document.getElementById('continueButton');
     
-    // Clear previous suggestions
-    dropdownContent.innerHTML = '';
+//     // Clear previous suggestions
+//     dropdownContent.innerHTML = '';
 
-    if (filter) {
-        fetch(`/suggestions?q=${filter}`)
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(item => {
-                    const a = document.createElement('a');
-                    a.href = '#';
-                    a.className = 'list-group-item list-group-item-action';
-                    a.textContent = item.stop_name; // Use the correct property name
-                    a.addEventListener('click', function() {
-                        input.value = item.stop_name; // Auto-fill the input field
-                        dropdownContent.innerHTML = '';
-                        continueButton.classList.remove('d-none'); // Show the "Continue" button // Clear the suggestions
-                    });
-                    dropdownContent.appendChild(a);
-                });
-            })
-            .catch(error => console.error('Error fetching suggestions:', error));
-    }
+//     if (filter) {
+//         fetch(`/buses?q=${filter}`)
+//             .then(response => response.json())
+//             .then(data => {
+//                 data.forEach(item => {
+//                     const a = document.createElement('a');
+//                     a.href = '#';
+//                     a.className = 'list-group-item list-group-item-action';
+//                     a.textContent = item.stop_name; // Use the correct property name
+//                     a.addEventListener('click', function() {
+//                         input.value = "item.stop_name + item."; // Auto-fill the input field
+//                         dropdownContent.innerHTML = '';
+//                         //continueButton.classList.remove('d-none'); // Show the "Continue" button // Clear the suggestions
+//                     });
+//                     dropdownContent.appendChild(a);
+//                 });
+//             })
+//             .catch(error => console.error('Error fetching suggestions:', error));
+//     }
 
     
-}
+// }
 
 function fetchBuses() {
-    const stopName = document.getElementById('searchInput2').value;
+    const stopName = document.getElementById('searchInput').value;
+    console.log(stopName)
     const busList = document.getElementById('busList');
     
     // Clear previous bus list
     busList.innerHTML = '';
 
-    fetch(`/buses?stop=${stopName}`)
+    fetch(`/buses?q=${stopName}`)
         .then(response => response.json())
         .then(data => {
+            //console.log(data)
             if (data.length > 0) {
                 const ul = document.createElement('ul');
                 ul.className = 'list-group';
                 data.forEach(item => {
                     const li = document.createElement('li');
                     li.className = 'list-group-item';
-                    li.textContent = item.bus_number; // Use the correct property name
+                    li.textContent = item.route_short_name + ' ' + item.trip_long_name; // Use the correct property name
                     ul.appendChild(li);
                 });
                 busList.appendChild(ul);
@@ -105,4 +99,13 @@ function fetchBuses() {
             }
         })
         .catch(error => console.error('Error fetching buses:', error));
+}
+
+function clearResults(){
+    const input = document.getElementById('searchInput');
+    const busList = document.getElementById('busList');
+    const continueButton = document.getElementById('continueButton');
+    busList.innerHTML = '';
+    input.value = '';
+    continueButton.classList.add('d-none');
 }
