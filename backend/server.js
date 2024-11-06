@@ -50,6 +50,17 @@ app.get('/buses', (req, res) => {
     });
 });
 
+app.get('/getMaakonds', (req, res) => {
+    db.query('SELECT DISTINCT authority FROM stops;', (err, results) => {
+        if (err) {
+            console.error('Error fetching maakonds:', err);
+            res.status(500).send('Server error');
+        } else {
+            res.json(results);
+        }
+    });
+});
+
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
