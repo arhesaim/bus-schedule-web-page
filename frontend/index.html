@@ -14,17 +14,17 @@
           <button type="button" class="btn btn-link">Maakond</button>
           <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
           <div class="form-group">
-              <input type="text" class="form-control" id="searchInput" placeholder="Search.." onkeyup="filterFunction()">
-              <div class="list-group" id="dropdownContent">
-                  <!-- Suggestions will be dynamically inserted here -->
-              </div>
-          </div>
+            <input type="text" class="form-control" id="searchInput" placeholder="Search.." onkeyup="filterFunction()">
+            <div class="list-group" id="dropdownContent">
+                <!-- Suggestions will be dynamically inserted here -->
+            </div>
+        </div>
 
           <button id="continueButton" class="btn btn-primary mt-2 d-none" onclick="fetchBuses()">Continue</button>
           
           <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
         </div>
-        <div class="list-group" id="busList"></div>
+        <div class="list-group" id="busList" style="max-height: 200px; overflow-y: auto;"></div>
 
         <div class="container-fluid">
             <button type="button" class="btn btn-outline-primary bg-light mb-3" onclick="clearResults()">Clear</button>
