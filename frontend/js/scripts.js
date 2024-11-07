@@ -126,6 +126,29 @@ function fetchBuses() {
         .catch(error => console.error('Error fetching buses:', error));
 }
 
+// Helper function to convert HH:MM:SS time to milliseconds since start of the day
+function convertToMilliseconds(timeString) {
+    const [hours, minutes, seconds] = timeString.split(':').map(Number);
+    return (hours * 3600 + minutes * 60 + seconds) * 1000;
+}
+
+// Function to sort bus data based on the closest departure times
+function sortBusDataByTime(busData) {
+    const now = new Date();
+    const nowMs = (now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds()) * 1000;
+
+    return busData.sort((a, b) => {
+        const timeA = convertToMilliseconds(a.departure_time);
+        const timeB = convertToMilliseconds(b.departure_time);
+
+        // Adjust times for comparison
+        const adjustedTimeA = timeA < nowMs ? timeA + 24 * 3600 * 1000 : timeA;
+        const adjustedTimeB = timeB < nowMs ? timeB + 24 * 3600 * 1000 : timeB;
+
+        return adjustedTimeA - adjustedTimeB;
+    });
+}
+
 function displayBusData() {
     const busList = document.getElementById('busList');
     let ul = busList.querySelector('ul');
@@ -137,12 +160,15 @@ function displayBusData() {
         busList.appendChild(ul);
     }
 
+    // Sort bus data by closest departure times
+    const sortedBusData = sortBusDataByTime(allBusData);
+
     // Display the next 5 items
-    for (let i = currentIndex; i < currentIndex + 5 && i < allBusData.length; i++) {
-        const item = allBusData[i];
+    for (let i = currentIndex; i < currentIndex + 5 && i < sortedBusData.length; i++) {
+        const item = sortedBusData[i];
         const li = document.createElement('li');
         li.className = 'list-group-item';
-        li.textContent = item.departure_time + ' ' + item.route_short_name + ' ' + item.trip_long_name;
+        li.textContent = `${item.departure_time} - ${item.route_short_name} ${item.trip_long_name}`;
         ul.appendChild(li);
     }
 
@@ -151,7 +177,7 @@ function displayBusData() {
 
     // Add or move the "Show More" button if there are more items to display
     let showMoreButton = document.getElementById('showMoreButton');
-    if (currentIndex < allBusData.length) {
+    if (currentIndex < sortedBusData.length) {
         if (!showMoreButton) {
             showMoreButton = document.createElement('button');
             showMoreButton.id = 'showMoreButton';
@@ -166,6 +192,8 @@ function displayBusData() {
         showMoreButton.remove(); // Remove the button if no more items to display
     }
 }
+
+
 
 function fetchUserTime() {
     const now = new Date();
