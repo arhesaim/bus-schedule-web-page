@@ -3,7 +3,8 @@ document.getElementById('continueButton').addEventListener('input', fetchBuses);
 
 let allBusData = []; // Global variable to store all fetched data
 let currentIndex = 0; // Index to keep track of the current position in the data
-
+// Fetch and display the user's time when the page loads
+window.onload = fetchUserTime;
 
 
 function filterFunction() {
@@ -166,8 +167,14 @@ function displayBusData() {
     }
 }
 
-
-
+function fetchUserTime() {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    const formattedTime = `${hours}:${minutes}:${seconds}`;
+    document.getElementById('userTime').textContent = `Current Time: ${formattedTime}`;
+}
 
 function clearResults(){
     const input = document.getElementById('searchInput');
