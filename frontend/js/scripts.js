@@ -6,6 +6,9 @@ let currentIndex = 0; // Index to keep track of the current position in the data
 // Fetch and display the user's time when the page loads
 window.onload = fetchUserTime;
 
+document.addEventListener('DOMContentLoaded', function() {
+    initializeMap();
+});
 
 function filterFunction() {
     const input = document.getElementById('searchInput');
@@ -39,6 +42,23 @@ function filterFunction() {
     }
 
     
+}
+
+function initializeMap() {
+    var map = L.map('map').setView([58.9483, 23.6279], 7); // Center the map around the first coordinate
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Fetch locations from the server
+    // fetch('/locations')
+    //     .then(response => response.json())
+    //     .then(locations => {
+    //         locations.forEach(function(location) {
+    //             L.marker([location.lat, location.lng]).addTo(map);
+    //         });
+    //     })
+    //     .catch(error => console.error('Error fetching locations:', error));
 }
 
 
@@ -105,7 +125,7 @@ function filterFunction() {
 
 function fetchBuses() {
     const stopName = document.getElementById('searchInput').value;
-    console.log(stopName);
+    //console.log(stopName);
     const busList = document.getElementById('busList');
     
     // Clear previous bus list
@@ -192,7 +212,6 @@ function displayBusData() {
         showMoreButton.remove(); // Remove the button if no more items to display
     }
 }
-
 
 
 function fetchUserTime() {

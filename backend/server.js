@@ -27,6 +27,8 @@ app.use(express.static(path.join(__dirname, '../frontend')));
 app.get('/suggestions', (req, res) => {
     const searchTerm = req.query.q;
     const query = `SELECT stop_name FROM stops WHERE stop_name LIKE '%${searchTerm}%'`;
+    //const query = `SELECT stop_name, stop_id, stop_lat, stop_lon FROM stops WHERE stop_name LIKE '%${searchTerm}%'`;
+    //here should also be getting stop_id, store it separately and use it for schedule query
     db.query(query, (err, results) => {
         if (err) throw err;
         res.json(results);
