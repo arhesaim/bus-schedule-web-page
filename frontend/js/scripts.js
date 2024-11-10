@@ -3,6 +3,7 @@ document.getElementById('continueButton').addEventListener('input', fetchBuses);
 
 let allBusData = []; // Global variable to store all fetched data
 let currentIndex = 0; // Index to keep track of the current position in the data
+let stopIdInfo;
 // Fetch and display the user's time when the page loads
 window.onload = fetchUserTime;
 
@@ -27,7 +28,9 @@ function filterFunction() {
                     const a = document.createElement('a');
                     a.href = '#';
                     a.className = 'list-group-item list-group-item-action';
-                    a.textContent = item.stop_name;
+                    a.textContent = item.stop_name + ' ' + item.stop_id;
+                    //stopIdInfo = item.stop_id;
+                    //console.log(stopIdInfo);
                     busStop = a.textContent; 
                     // Use the correct property name
                     a.addEventListener('click', function() {
@@ -133,7 +136,8 @@ function fetchBuses() {
     allBusData = []; // Reset the global data
     currentIndex = 0; // Reset the index
 
-    fetch(`/buses?q=${stopName}`)
+    //fetch(`/buses?stopName=${stopName}&stopId=${stopIdInfo}`)
+    fetch(`/buses?stopName=${stopName}`)
         .then(response => response.json())
         .then(data => {
             allBusData = data; // Store the fetched data
