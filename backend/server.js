@@ -37,21 +37,21 @@ app.get('/suggestions', (req, res) => {
 
 app.get('/buses', (req, res) => {
     const stopName = req.query.stopName;
-    //const stopId = req.query.stopId;
-    const query = `select s.stop_name,r.route_short_name, t.trip_long_name, s.stop_desc, st.departure_time
-                    from stops as s
-                        join stop_times as st on s.stop_id = st.stop_id
-                        join trips as t on t.trip_id = st.trip_id
-                        join routes as r on t.route_id = r.route_id
-                    where stop_name like '%${stopName}%'
-                    ORDER BY TIME(st.departure_time);`;
+    const stopId = req.query.stopId;
     // const query = `select s.stop_name,r.route_short_name, t.trip_long_name, s.stop_desc, st.departure_time
     //                 from stops as s
     //                     join stop_times as st on s.stop_id = st.stop_id
     //                     join trips as t on t.trip_id = st.trip_id
     //                     join routes as r on t.route_id = r.route_id
-    //                 where stop_name like '%${stopName}%' and stop_id like '%${stopId}%'
+    //                 where stop_name like '%${stopName}%'
     //                 ORDER BY TIME(st.departure_time);`;
+    const query = `select s.stop_name,r.route_short_name, t.trip_long_name, s.stop_desc, st.departure_time
+                    from stops as s
+                        join stop_times as st on s.stop_id = st.stop_id
+                        join trips as t on t.trip_id = st.trip_id
+                        join routes as r on t.route_id = r.route_id
+                    where s.stop_id like '%${stopId}%'
+                    ORDER BY TIME(st.departure_time);`;
     db.query(query, (err, results) => {
         if (err) throw err;
         res.json(results);

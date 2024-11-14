@@ -29,12 +29,13 @@ function filterFunction() {
                     a.href = '#';
                     a.className = 'list-group-item list-group-item-action';
                     a.textContent = item.stop_name + ' ' + item.stop_id;
-                    //stopIdInfo = item.stop_id;
-                    //console.log(stopIdInfo);
+                    
                     busStop = a.textContent; 
                     // Use the correct property name
                     a.addEventListener('click', function() {
                         input.value = item.stop_name; // Auto-fill the input field
+                        stopIdInfo = item.stop_id;
+                        console.log(stopIdInfo);
                         dropdownContent.innerHTML = '';
                         continueButton.classList.remove('d-none'); // Show the "Continue" button // Clear the suggestions
                     });
@@ -136,8 +137,8 @@ function fetchBuses() {
     allBusData = []; // Reset the global data
     currentIndex = 0; // Reset the index
 
-    //fetch(`/buses?stopName=${stopName}&stopId=${stopIdInfo}`)
-    fetch(`/buses?stopName=${stopName}`)
+    fetch(`/buses?stopName=${stopName}&stopId=${stopIdInfo}`)
+    //fetch(`/buses?stopName=${stopName}`)
         .then(response => response.json())
         .then(data => {
             allBusData = data; // Store the fetched data
