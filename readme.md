@@ -1,37 +1,23 @@
-i will add some info here later
+dependencies:
+- express js
+- nodemon js
+- mysql 
+
+
+how to run:
+- npm run start
 
 file structure
 ```
-/my-web-app
+/bus-schedule-web-page
 │
 ├── /frontend
-│   ├── /css
-│   │   └── styles.css
 │   ├── /js
 │   │   └── scripts.js
-│   ├── /images
-│   │   └── logo.png
-│   ├── /bootstrap
-│   │   └── (Bootstrap files)
 │   └── index.html
 │
 ├── /backend
-│   ├── /controllers
-│   │   └── userController.js
-│   ├── /models
-│   │   └── userModel.js
-│   ├── /routes
-│   │   └── userRoutes.js
-│   ├── /middlewares
-│   │   └── authMiddleware.js
-│   ├── /config
-│   │   └── dbConfig.js
 │   ├── server.js
-│
-├── /database
-│   └── schema.sql
-│
-├── /node_modules
 │
 ├── .gitignore
 ├── package.json
