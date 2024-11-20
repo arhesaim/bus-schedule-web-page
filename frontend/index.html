@@ -18,8 +18,26 @@
         
         <div class="card-body">
           <h5 class="card-title">Schedule</h5>
-          <div id="userTime"></div>
-          <button type="button" class="btn btn-link">Maakond</button>
+          <!-- Maakond Modal -->
+          <div class="modal fade" id="maakondModal" tabindex="-1" aria-labelledby="maakondModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="maakondModalLabel">Maakond List</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <ul class="list-group" id="maakondList">
+                    <!-- Maakond items will be dynamically inserted here -->
+                  </ul>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+              <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#maakondModal" onclick="loadMaakonds()">Maakond</button>
           <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
           <div class="form-group">
             <input type="text" class="form-control" id="searchInput" placeholder="Search.." onkeyup="filterFunction()">

@@ -145,7 +145,7 @@ function fetchBuses() {
                 busList.textContent = 'No buses available for this stop.';
             }
         })
-        .catch(error => console.error('Error fetching buses:', error));
+        .catch(error => console.error('Error fetching buses:', error));    
 }
 
 // Helper function to convert HH:MM:SS time to milliseconds since start of the day
@@ -232,4 +232,31 @@ function clearResults(){
     busList.innerHTML = '';
     input.value = '';
     continueButton.classList.add('d-none');
+}
+
+// Function to load maakonds
+function loadMaakonds() {
+    fetch('/getMaakonds')
+        .then(response => response.json())
+        .then(data => {
+            const maakondList = document.getElementById('maakondList');
+            maakondList.innerHTML = ''; // Clear existing items
+
+            if (data.length === 0) {
+                console.log('No maakonds found');
+                const emptyMessage = document.createElement('li');
+                emptyMessage.className = 'list-group-item';
+                emptyMessage.textContent = 'No maakonds available';
+                maakondList.appendChild(emptyMessage);
+            } else {
+                data.forEach(maakond => {
+                    console.log('Adding maakond:', maakond.authority); // Debugging log
+                    const listItem = document.createElement('li');
+                    listItem.className = 'list-group-item';
+                    listItem.textContent = maakond.authority;
+                    maakondList.appendChild(listItem);
+                });
+            }
+        })
+        .catch(error => console.error('Error fetching maakonds:', error));
 }
