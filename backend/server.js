@@ -36,7 +36,7 @@ app.get('/suggestions', (req, res) => {
 });
 
 app.get('/buses', (req, res) => {
-    const stopName = req.query.stopName;
+    //const stopName = req.query.stopName;
     const stopId = req.query.stopId;
     // const query = `select s.stop_name,r.route_short_name, t.trip_long_name, s.stop_desc, st.departure_time
     //                 from stops as s

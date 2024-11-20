@@ -4,8 +4,10 @@ document.getElementById('continueButton').addEventListener('input', fetchBuses);
 let allBusData = []; // Global variable to store all fetched data
 let currentIndex = 0; // Index to keep track of the current position in the data
 let stopIdInfo;
+let locationData;
 // Fetch and display the user's time when the page loads
 window.onload = fetchUserTime;
+var map = L.map('map').setView([58.9483, 23.6279], 7);
 
 document.addEventListener('DOMContentLoaded', function() {
     initializeMap();
@@ -35,7 +37,10 @@ function filterFunction() {
                     a.addEventListener('click', function() {
                         input.value = item.stop_name; // Auto-fill the input field
                         stopIdInfo = item.stop_id;
-                        console.log(stopIdInfo);
+                        allBusData = [item.stop_lat, item.stop_lon];
+                        console.log(allBusData);
+                        L.marker(allBusData).addTo(map);
+                        map.setView(allBusData, 13);
                         dropdownContent.innerHTML = '';
                         continueButton.classList.remove('d-none'); // Show the "Continue" button // Clear the suggestions
                     });
@@ -49,20 +54,12 @@ function filterFunction() {
 }
 
 function initializeMap() {
-    var map = L.map('map').setView([58.9483, 23.6279], 7); // Center the map around the first coordinate
+    //var map = L.map('map').setView([58.9483, 23.6279], 7);// Center the map around the first coordinate
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    // Fetch locations from the server
-    // fetch('/locations')
-    //     .then(response => response.json())
-    //     .then(locations => {
-    //         locations.forEach(function(location) {
-    //             L.marker([location.lat, location.lng]).addTo(map);
-    //         });
-    //     })
-    //     .catch(error => console.error('Error fetching locations:', error));
+
 }
 
 
