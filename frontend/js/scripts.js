@@ -39,8 +39,8 @@ function filterFunction() {
                         stopIdInfo = item.stop_id;
                         allBusData = [item.stop_lat, item.stop_lon];
                         console.log(allBusData);
-                        L.marker(allBusData).addTo(map);
-                        map.setView(allBusData, 13);
+                        //L.marker(allBusData).addTo(map);
+                        //map.setView(allBusData, 13);
                         dropdownContent.innerHTML = '';
                         continueButton.classList.remove('d-none'); // Show the "Continue" button // Clear the suggestions
                     });
@@ -131,11 +131,15 @@ function fetchBuses() {
     
     // Clear previous bus list
     busList.innerHTML = '';
+    console.log(allBusData);
+    L.marker(allBusData).addTo(map);
+    map.setView(allBusData, 13);
     allBusData = []; // Reset the global data
     currentIndex = 0; // Reset the index
 
     fetch(`/buses?stopName=${stopName}&stopId=${stopIdInfo}`)
     //fetch(`/buses?stopName=${stopName}`)
+    
         .then(response => response.json())
         .then(data => {
             allBusData = data; // Store the fetched data

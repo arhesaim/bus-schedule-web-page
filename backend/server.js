@@ -45,7 +45,7 @@ app.get('/buses', (req, res) => {
     //                     join routes as r on t.route_id = r.route_id
     //                 where stop_name like '%${stopName}%'
     //                 ORDER BY TIME(st.departure_time);`;
-    const query = `select s.stop_name,r.route_short_name, t.trip_long_name, s.stop_desc, st.departure_time
+    const query = `select distinct s.stop_name,r.route_short_name, t.trip_long_name, s.stop_desc, st.departure_time
                     from stops as s
                         join stop_times as st on s.stop_id = st.stop_id
                         join trips as t on t.trip_id = st.trip_id
